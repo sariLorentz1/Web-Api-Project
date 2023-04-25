@@ -1,0 +1,51 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+    <link rel="stylesheet" type="text/css" href="home.css" />
+</head>
+<body>
+    <script src="home.js"></script>
+    <div>
+        <div id="LogIn">
+            <h4>logIn</h4>
+            <label for="email">email:</label>
+            <br />
+            <input type="text" id="email" />
+            <br />
+            <label for="password">password:</label>
+            <br />
+            <input type="password" id="password" />
+            <br />
+            <br />
+            <button id="logInButton" onclick=LogIn()>logIn</button>
+            <br /><br /><br />
+            <a onclick="document.getElementById('regist').style.setProperty('visibility','visible')">sign up</a>
+        </div>
+
+        <div id="regist">
+            <h4>regist</h4>
+            <label for="registEmail">email:</label>
+            <br />
+            <input type="text" id="registEmail" />
+            <br />
+            <label for="registPassword">password:</label>
+            <br />
+            <input onkeypress=getPasswordStrength(this.value) type="password" id="registPassword" />
+            <progress id="passwordStrength" value="0" max="4" style="background-color: #4CAF50">  </progress>
+            <br />
+            <label for="firstName">first name:</label>
+            <br />
+            <input type="text" id="firstName" />
+            <br />
+            <label for="lastName">last name:</label>
+            <br />
+            <input type="text" id="lastName" />
+            <br />
+            <br />
+            <button id="registButton" onclick=Regist()>regist</button>
+        </div>
+    </div>
+</body>
+</html>

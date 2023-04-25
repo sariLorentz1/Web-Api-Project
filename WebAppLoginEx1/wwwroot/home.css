@@ -1,0 +1,141 @@
+﻿/*body {
+    margin: 0;
+    padding: 0;
+    background-color: whitesmoke;
+    font-family: 'Arial';
+}*/
+#LogIn {
+    border: 1px solid black;
+    padding: 20px;
+    width: 300px;
+    margin: 0 auto;
+    margin-top:50px;
+}
+
+    #LogIn h4 {
+        font-size: 20px;
+        text-align: center;
+    }
+
+    #LogIn label {
+        display: block;
+        margin-bottom: 5px;
+    }
+
+    #LogIn input[type="text"],
+    #LogIn input[type="password"] {
+        width: 100%;
+        padding: 5px;
+        margin-bottom: 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+    }
+
+    #LogIn button {
+        background-color: #4CAF50;
+        color: white;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        width: 100%;
+    }
+
+        #LogIn button:hover {
+            background-color: #3e8e41;
+        }
+
+/* Registration form styles */
+#regist {
+    border: 1px solid black;
+    padding: 20px;
+    width: 300px;
+    margin: 0 auto;
+    visibility: hidden;
+    margin-top:50px;
+}
+
+    #regist h4 {
+        font-size: 20px;
+        text-align: center;
+    }
+
+    #regist label {
+        display: block;
+        margin-bottom: 5px;
+    }
+
+    #regist input[type="text"],
+    #regist input[type="password"] {
+        width: 100%;
+        padding: 5px;
+        margin-bottom: 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+    }
+
+    #regist button {
+        background-color: #4CAF50;
+        color: white;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        width: 100%;
+    }
+
+        #regist button:hover {
+            background-color: #3e8e41;
+        }
+h3 {
+    text-align: center;
+    color: #000000;
+    padding: 20px;
+}
+
+Show registration form when link is clicked
+#regist:target {
+    visibility: visible;
+}
+
+Global styles
+body {
+    font-family: Arial, sans-serif;
+}
+
+/* Update form styles */
+#update {
+    border: 1px solid black;
+    padding: 20px;
+    width: 300px;
+    margin: 0 auto;
+}
+
+    #update label {
+        display: block;
+        margin-bottom: 5px;
+    }
+
+    #update input[type="text"],
+    #update input[type="password"] {
+        width: 100%;
+        padding: 5px;
+        margin-bottom: 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+    }
+
+    #update button {
+        background-color: #4CAF50;
+        color: white;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        width: 100%;
+    }
+
+        #update button:hover {
+            background-color: #3e8e41;
+        }
+
