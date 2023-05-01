@@ -20,9 +20,9 @@ namespace WebAppLoginEx1.Controllers
         }
         // GET: api/<productsController>
         [HttpGet]
-        public async Task<IEnumerable<Product>> Get(int[] categryIds,int minPrice,int maxPrice,string productName,string description )
+        public async Task<IEnumerable<Product>> Get(IEnumerable<string>? categories, string? name, int? minPrice, int? maxPrice)
         {
-            throw new NotImplementedException();
+            return await service.getProducts(categories, name, minPrice, maxPrice);
         }
 
         //public async Task<User> Get(int id)

@@ -24,7 +24,7 @@ async function LogIn() {
             const data = await response.json();
             if (data) {
                 sessionStorage.setItem("userInfo", JSON.stringify({ firstname: data.firstName, lastname: data.lastName, id: data.id }));
-                window.location.href = "update.html";
+                window.location.href = "products.html";
             }
         }
     }

@@ -10,6 +10,6 @@ namespace Service
     public interface IProductService
     {
         Task<Product> addNewProduct(Product product);
-        Task<IEnumerable<Product>> getProducts(int[]? categryIds, int? minPrice, int? maxPrice, string? productName, string? description);
+        Task<IEnumerable<Product>> getProducts(IEnumerable<string>? categories, string? name, int? minPrice, int? maxPrice);
     }
 }

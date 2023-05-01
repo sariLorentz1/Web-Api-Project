@@ -21,9 +21,9 @@ namespace Service
             return await repository.addNewProduct(product);
         }
 
-        public async Task<IEnumerable<Product>> getProducts(int[]? categryIds, int? minPrice, int? maxPrice, string? productName, string? description)
+        public async Task<IEnumerable<Product>> getProducts(IEnumerable<string>? categories, string? name, int? minPrice, int? maxPrice)
         {
-            return await repository.getProducts(categryIds,minPrice,maxPrice,productName,description);
+            return await repository.getProducts(categories, name,  minPrice, maxPrice);
         }
     }
 }
