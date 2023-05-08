@@ -26,11 +26,38 @@ namespace Repository
 
         public async Task<IEnumerable<Product>> getProducts(IEnumerable<string>? categories, string? name, int? minPrice, int? maxPrice)
         {
-            return await dbContext.Products.Include(p => p.Category).Where(p =>
-            (categories.Count() == 0 ? true : !categories.Contains(p.Category.Name)) &&//categories.Count() == 0 ? false :
-            (name == null || p.Name.Contains(name)) &&
-            (minPrice == null || p.Price >= minPrice) &&
-            (maxPrice == null || p.Price <= maxPrice)).OrderBy(p => p.Price).ToListAsync();
+            var query = dbContext.Products.Where(product =>
+
+                   (name == null ? (true) : product.Name.Contains(name))
+                     &&
+                    (minPrice == null ? (true) : product.Price > minPrice)
+                    &&
+                    (maxPrice == null ? (true) : product.Price < maxPrice)
+             &&
+             (categories.Count() <= 0 ? (true) : categories.Contains(product.CategoryId.ToString()))
+             );/*.OrderBy(product => product.Price);*/
+
+            return await query.ToListAsync();
+
+            //return await dbContext.Products.ToListAsync();
         }
+
+        //public async Task<IEnumerable<Product>> getProductsBySearch(string? desc, int? minPrice, int? maxPrice, IEnumerable<string>? categoryId)
+        //{
+        //    var query = _DbContext.Products.Where(product =>
+
+        //        (desc == null ? (true) : product.Description.Contains(desc))
+        //            &&
+        //            (minPrice == null ? (true) : product.Price > minPrice)
+        //            &&
+        //            (maxPrice == null ? (true) : product.Price < maxPrice)
+        //            &&
+        //            (categoryId.Count() <= 0 ? (true) : categoryId.Contains(product.Category.Id.ToString()))
+        //).OrderBy(product => product.Price);
+
+        //    return await query.ToListAsync();
+
+        //}
     }
 }
+

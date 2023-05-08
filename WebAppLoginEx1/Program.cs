@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 //using Microsoft.EntityFrameworkCore;
 using Repository;
 using Service;
+using Business;
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -28,6 +29,8 @@ builder.Services.AddTransient<ICategoryService, CategoryService>();
 builder.Services.AddEndpointsApiExplorer();
 
 builder.Services.AddSwaggerGen();
+builder.Services.AddAuthentication();
+builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
 builder.Services.AddDbContext<IceShopContext>(options => options.UseSqlServer
 ("Data Source=SRV2\\PUPILS;Initial Catalog=IceShop;Integrated Security=True"));
