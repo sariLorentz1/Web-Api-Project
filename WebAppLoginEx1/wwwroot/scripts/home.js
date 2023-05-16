@@ -69,7 +69,7 @@ async function Regist() {
             }
         }
         else {
-            alert("all fields are require");
+            alert("all fields are require!!!!");
         }
     }
 }
