@@ -1,5 +1,6 @@
 ﻿
 async function LogIn() {
+    localStorage.clear();
     console.log("login");
     const email = document.getElementById("email").value;
     const password = document.getElementById("password").value;
@@ -51,12 +52,21 @@ async function Regist() {
     );
     if (!response.ok) {
         if (response.status == '400') {
-            alert(`email already exists ${response.status}`);
+            const res = await response.json();
+            if (res.errors.Email)
+                alert(res.errors.Email[0])
+            if (res.errors.FirstName)
+                alert(res.errors.FirstName[0])
         }
     }
     else {
         if (response.status == '201') {
             alert("user created");
+            const data = await response.json();
+            if (data) {
+                sessionStorage.setItem("userInfo", JSON.stringify({ firstname: data.firstName, lastname: data.lastName, id: data.id }));
+                window.location.href = "products.html";
+            }
         }
         else {
             alert("all fields are require");

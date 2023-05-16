@@ -17,11 +17,22 @@ namespace Repository
         }
         public async Task<Order> addNewOrder(Order order)
         {
+
+            //int sum=0;
+            // order.OrderItems.ForEach(p =>  sum += (p.quantity * p.productId.price));
+
+
+
             await dbContext.Orders.AddAsync(order);
             await dbContext.SaveChangesAsync();
             return order;
         }
         public async Task<List<Order>> GetAllOrders() => await dbContext.Orders.ToListAsync();
 
+        public async Task<Order> getOrderAsync(int id)
+        {
+            var orderWithItems = await dbContext.Orders.Include(order => order.OrderItems).Where(order => order.Id == id).ToListAsync();
+            return orderWithItems[0];
+        }
     }
 }

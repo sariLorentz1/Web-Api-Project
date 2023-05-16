@@ -1,6 +1,10 @@
-﻿using entities;
+﻿using AutoMapper;
+using DTO;
+using entities;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using Service;
+using Stripe;
 using System.Reflection.PortableExecutable;
 using System.Text.Json;
 
@@ -13,13 +17,16 @@ namespace WebAppLoginEx1.Controllers
     public class usersController : ControllerBase
     {
 
-        IUserService service;
-        IPasswordsService servicePass;
-
-        public usersController(IUserService service, IPasswordsService servicePass)
+        IUserService _service;
+        IPasswordsService _servicePass;
+        IMapper _mapper;
+        ILogger<usersController> _logger;
+        public usersController(IUserService service, IPasswordsService servicePass, IMapper mapper,ILogger<usersController> logger)
         {
-            this.service = service;
-            this.servicePass = servicePass;
+            _service = service;
+            _servicePass = servicePass;
+            _mapper = mapper;
+            _logger = logger;
         }
 
 
@@ -28,7 +35,7 @@ namespace WebAppLoginEx1.Controllers
         [HttpGet("{id}")]
         public async Task<User> Get(int id)
         {
-            return await service.getbyIdAsync(id);
+            return await _service.getbyIdAsync(id);
         }
 
 
@@ -36,39 +43,50 @@ namespace WebAppLoginEx1.Controllers
 
 
         [HttpPost]
-        public async Task<ActionResult<User>> LoginPost([FromBody] User loginUser)
+        public async Task<ActionResult<UserDTO>> LoginPost([FromBody] UserDTO loginUserDTO)
         {
-            User found = await service.loginAsync(loginUser);
+            User loginUser = _mapper.Map<UserDTO, User>(loginUserDTO);
+            User found = await _service.loginAsync(loginUser);
             if (found != null)
-                return found;
+            {
+                _logger.LogInformation($"user {loginUserDTO.FirstName},{loginUserDTO.LastName},{loginUserDTO.Email} succeed to login");
+
+                UserDTO foundDTO = _mapper.Map<User, UserDTO>(found);
+                //_logger.LogInformation($"Login - userName: {foundDTO.Email} at {DateTime.UtcNow.ToLongTimeString()}");
+                return foundDTO;
+            }
             return NoContent();
         }
 
 
 
         [HttpPost("regist")]
-        public async Task<ActionResult<User>> Post([FromBody] User userRegist)
+        public async Task<ActionResult<UserDTO>> Post([FromBody] UserDTO userRegistDTO)
         {
-            Password pass = new Password(userRegist.Password);
-            if (servicePass.getPasswordRate(pass) > 2)
+            Password pass = new Password(userRegistDTO.Password);
+            if (_servicePass.getPasswordRate(pass) > 2)
             {
-                User userCreated = await service.registerAsync(userRegist);
+                User userRegist = _mapper.Map<UserDTO, User>(userRegistDTO);
+                User userCreated = await _service.registerAsync(userRegist);
                 if (userCreated != null)
-                    return CreatedAtAction(nameof(Get), new { id = userCreated.Id }, userCreated);
+                {
+                    _logger.LogInformation($"user {userRegistDTO.FirstName},{userRegistDTO.LastName},{userRegistDTO.Email} created");
+
+                    UserDTO userDTOCreated = _mapper.Map<User, UserDTO>(userCreated);
+                    //_logger.LogInformation($"Regist - userName: {userDTOCreated.Email} at {DateTime.UtcNow.ToLongTimeString()}");
+                    return CreatedAtAction(nameof(Get), new { id = userDTOCreated.Id }, userDTOCreated);
+                }
+
             }
             return BadRequest("BadRequest");
         }
-
-
 
         // PUT api/<usersController>/5
         [HttpPut("{id}")]
         public async Task Put(int id, [FromBody] User userToUpdate)
         {
-            await service.updateAsync(userToUpdate, id);
+            await _service.updateAsync(userToUpdate, id);
         }
-
- 
 
     }
 }

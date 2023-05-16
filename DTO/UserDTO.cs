@@ -2,10 +2,12 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Text.Json.Serialization;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+namespace DTO;
 
-namespace entities;
-
-public partial class User
+public class UserDTO
 {
     public int Id { get; set; }
 
@@ -18,5 +20,5 @@ public partial class User
     public string? LastName { get; set; }
 
     public string Password { get; set; } = null!;
-    public virtual ICollection<Order> Orders { get; } = new List<Order>();
+
 }

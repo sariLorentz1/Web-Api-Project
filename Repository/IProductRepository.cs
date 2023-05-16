@@ -12,6 +12,8 @@ namespace Repository
         Task<Product> addNewProduct(Product product);
 
         Task<IEnumerable<Product>> getProducts(IEnumerable<string>? categories, string? name, int? minPrice, int? maxPrice);
+         Task<Product> GetProductById(int id);
+
 
     }
 }

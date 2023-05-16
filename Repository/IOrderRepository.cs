@@ -11,6 +11,6 @@ namespace Repository
     {
         Task<Order> addNewOrder(Order order);
         Task<List<Order>> GetAllOrders();
-
+        Task<Order> getOrderAsync(int id);
     }
 }

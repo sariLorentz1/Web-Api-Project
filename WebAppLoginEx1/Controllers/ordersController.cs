@@ -1,6 +1,9 @@
-﻿using entities;
+﻿using AutoMapper;
+using DTO;
+using entities;
 using Microsoft.AspNetCore.Mvc;
 using Service;
+using Stripe;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -10,45 +13,36 @@ namespace WebAppLoginEx1.Controllers
     [ApiController]
     public class ordersController : ControllerBase
     {
-        IOrderService service;
+        IOrderService _service;
+        IMapper _mapper;
 
-        public ordersController(IOrderService service)
+        public ordersController(IOrderService service, IMapper mapper)
         {
-            this.service = service;
+            _service = service;
+            _mapper = mapper;
         }
-        //// GET: api/<ordersController>
-        //[HttpGet]
-        //public IEnumerable<string> Get()
-        //{
-        //    return new string[] { "value1", "value2" };
-        //}
 
+        [HttpGet("{id}")]
+        public async Task<OrderDTO> Get(int id)
+        {
+            Order order = await _service.getOrderAsync(id);
+            OrderDTO orderDTO = _mapper.Map<Order, OrderDTO>(order);
+            return orderDTO;
+        }
 
-        //// GET api/<ordersController>/5
-        //[HttpGet("{id}")]
-        //public string Get(int id)
-        //{
-        //    return "value";
-        //}
-        // POST api/<ordersController>
+        // POST api/<OrdersController>
         [HttpPost]
-        public async Task<ActionResult<Order>> Post([FromBody] Order order)
+        public async Task<ActionResult<OrderDTO>> Post([FromBody] OrderDTO orderDTO)
         {
-            Order found = await service.addNewOrder(order);
-            if (found != null)
-                return found;
-            return NoContent();
+            Order order = _mapper.Map<OrderDTO, Order>(orderDTO);
+            Order orderCreated = await _service.addNewOrder(order);
+            if (orderCreated != null)
+            {
+                OrderDTO orderCreatedDTO = _mapper.Map<Order, OrderDTO>(orderCreated);
+                return CreatedAtAction(nameof(Get), new { id = orderCreatedDTO.Id }, orderCreatedDTO);
+            }
+            return BadRequest();
         }
-        // PUT api/<ordersController>/5
-        //[HttpPut("{id}")]
-        //public void Put(int id, [FromBody] string value)
-        //{
-        //}
 
-        //// DELETE api/<ordersController>/5
-        //[HttpDelete("{id}")]
-        //public void Delete(int id)
-        //{
-        //}
     }
 }

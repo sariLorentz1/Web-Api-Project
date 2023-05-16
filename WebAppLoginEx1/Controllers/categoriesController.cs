@@ -1,6 +1,10 @@
 ﻿using entities;
 using Microsoft.AspNetCore.Mvc;
 using Service;
+using AutoMapper;
+using DTO;
+using Stripe;
+
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -10,21 +14,30 @@ namespace WebAppLoginEx1.Controllers
     [ApiController]
     public class categoriesController : ControllerBase
     {
-        ICategoryService service;
+        ICategoryService _service;
+        IMapper _mapper;
 
-        public categoriesController(ICategoryService service)
+        public categoriesController(ICategoryService service, IMapper mapper)
         {
-            this.service = service;
+          _service = service;
+            _mapper = mapper;
         }
        
         // GET: api/<categoriesController>
+       
         [HttpGet]
-        public async Task<IEnumerable<Category>> Get()
+        public async Task<ActionResult<IEnumerable<CategoryDTO>>> Get()
         {
-            return await service.getCategories();
+            IEnumerable<Category> categories = await _service.getCategories();
+            if (categories != null)
+            {
+                IEnumerable<CategoryDTO> categoriesDTO = _mapper.Map<IEnumerable<Category>, IEnumerable<CategoryDTO>>(categories);
+                return Ok(categoriesDTO);
+            }
+            return BadRequest("No categories");
         }
 
-        //// GET api/<categoriesController>/5
+        ////GET api/<categoriesController>/5
         //[HttpGet("{id}")]
         //public string Get(int id)
         //{
@@ -33,25 +46,21 @@ namespace WebAppLoginEx1.Controllers
 
         // POST api/<categoriesController>
         [HttpPost]
-        public async Task<ActionResult<Category>> Post([FromBody] Category category)
+        public async Task<ActionResult<CategoryDTO>> Post([FromBody] CategoryDTO categoryDTO)
         {
-            Category found = await service.addNewCategory(category);
-            if (found != null)
-                return found;
-            return NoContent();
+            Category category = _mapper.Map<CategoryDTO,Category >(categoryDTO);
+
+            Category created =await _service.addNewCategory(category);
+            if (created != null)
+            {
+                CategoryDTO categoryCreated= _mapper.Map<Category, CategoryDTO> (created);
+                return CreatedAtAction(nameof(Get), new { id = categoryCreated.Id }, categoryCreated);
+            }
+
+            return BadRequest("Don't success");
         }
 
 
-        //// PUT api/<categoriesController>/5
-        //[HttpPut("{id}")]
-        //public void Put(int id, [FromBody] string value)
-        //{
-        //}
 
-        //// DELETE api/<categoriesController>/5
-        //[HttpDelete("{id}")]
-        //public void Delete(int id)
-        //{
-        //}
     }
 }
