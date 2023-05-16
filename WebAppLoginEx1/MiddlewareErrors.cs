@@ -26,7 +26,7 @@ namespace WebAppLoginEx1
             { 
 
                 httpContext.Response.StatusCode = 500;
-                _logger.LogError("Error happen in middleware"+e.StackTrace+e.Message); 
+                _logger.LogError("Error happen in middleware"+e.StackTrace+e.Message+"we are sorry..."); 
             }
         }
     }
