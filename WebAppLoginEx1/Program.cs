@@ -4,10 +4,12 @@ using Microsoft.EntityFrameworkCore;
 using Repository;
 using Service;
 using WebAppLoginEx1;
+using NLog.Web;
 //using Business;
 
 
 var builder = WebApplication.CreateBuilder(args);
+builder.Host.UseNLog();
 
 // Add services to the container.
 
@@ -36,11 +38,12 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddAuthentication();
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
-
 builder.Services.AddDbContext<IceShopContext>(options => options.UseSqlServer
-("Data Source=SRV2\\PUPILS;Initial Catalog=IceShop;Integrated Security=True"));
-
+(connectionString: builder.Configuration.GetConnectionString("connectionString")
+));
 var app = builder.Build();
+
+
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
@@ -51,7 +54,6 @@ if (app.Environment.IsDevelopment())
 app.UseMiddleware();
 app.UseMiddlewareErrors();
 
-
 app.UseStaticFiles();
 
 app.UseHttpsRedirection();
@@ -59,5 +61,15 @@ app.UseHttpsRedirection();
 app.UseAuthorization();
 
 app.MapControllers();
+
+app.Use(async (context, next) =>
+{
+    await next(context);
+    if (context.Response.StatusCode == 404)
+    {
+        context.Response.ContentType = "text/html";
+        await context.Response.SendFileAsync("./wwwroot/pages/404.html");
+    }
+});
 
 app.Run();

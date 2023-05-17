@@ -26,8 +26,6 @@ namespace Repository
 
         public async Task<IEnumerable<Product>> getProducts(IEnumerable<string>? categories, string? name, int? minPrice, int? maxPrice)
         {
-            int a=  0;
-            int b = 3 / a;
             return await dbContext.Products.Include(p => p.Category).Where(p =>
             (categories.Count() <= 0 ? (true) : categories.Contains(p.CategoryId.ToString())) &&
             (name == null || p.Name.Contains(name)) &&

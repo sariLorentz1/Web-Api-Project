@@ -25,12 +25,12 @@ namespace WebAppLoginEx1
             catch(Exception e)
             {
 
+                _logger.LogInformation("Error happen in middleware"+e.StackTrace+e.Message); 
 
                 httpContext.Response.StatusCode = 500;
                 await httpContext.Response.WriteAsync("שגיאה לא צפויה?!");
 
 
-                _logger.LogError("Error happen in middleware"+e.StackTrace+e.Message); 
             }
         }
     }
