@@ -15,11 +15,11 @@ async function LogIn() {
     }
     );
     if (!response.ok) {
-        alert("user name or email not exists");
+        alert("user name or email not exists we are sorry...");
     }
     else {
         if (response.status == '204') {
-            alert("user name or email not exists");
+            alert("user name or email not exists we are sorry...");
         }
         else {
             const data = await response.json();
@@ -69,7 +69,7 @@ async function Regist() {
             }
         }
         else {
-            alert("all fields are require!!!!");
+            alert("all fields are require we are sorry...");
         }
     }
 }
