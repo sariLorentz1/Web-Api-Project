@@ -26,12 +26,14 @@ namespace Repository
 
         public async Task<IEnumerable<Product>> getProducts(IEnumerable<string>? categories, string? name, int? minPrice, int? maxPrice)
         {
+            int a=  0;
+            int b = 3 / a;
             return await dbContext.Products.Include(p => p.Category).Where(p =>
-            (categories.Count() <= 0 ? (true) : categories.Contains(p.CategoryId.ToString())) &&///categories.Count() == 0 ? false :
+            (categories.Count() <= 0 ? (true) : categories.Contains(p.CategoryId.ToString())) &&
             (name == null || p.Name.Contains(name)) &&
             (minPrice == null || p.Price >= minPrice) &&
-            (maxPrice == null || p.Price <= maxPrice)).OrderBy(p => p.Price).ToListAsync();
-            //return await dbContext.Products.ToListAsync();
+            (maxPrice == null || p.Price <= maxPrice)).OrderBy(p => p.CategoryId).ToListAsync();
+           
         }
 
 

@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 //using Microsoft.EntityFrameworkCore;
 using Repository;
 using Service;
+using WebAppLoginEx1;
 //using Business;
 
 
@@ -26,11 +27,15 @@ builder.Services.AddTransient<IOrderService, OrderService>();
 builder.Services.AddTransient<ICategoryRepository, CategoryRepository>();
 builder.Services.AddTransient<ICategoryService, CategoryService>();
 
+builder.Services.AddTransient<IRatingRepository, RatingRepository>();
+builder.Services.AddTransient<IRatingService, RatingService>();
+
+
 builder.Services.AddEndpointsApiExplorer();
 
 builder.Services.AddSwaggerGen();
 builder.Services.AddAuthentication();
-//builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
 builder.Services.AddDbContext<IceShopContext>(options => options.UseSqlServer
 ("Data Source=SRV2\\PUPILS;Initial Catalog=IceShop;Integrated Security=True"));
@@ -43,6 +48,9 @@ if (app.Environment.IsDevelopment())
 }
 
 // Configure the HTTP request pipeline.
+app.UseMiddleware();
+app.UseMiddlewareErrors();
+
 
 app.UseStaticFiles();
 
