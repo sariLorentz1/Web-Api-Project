@@ -3,14 +3,12 @@ function drawProduct(p) {
             console.log("p" + p + p.name)
             const temp = document.querySelector("#temp-row");
             const clone = temp.content.cloneNode(true);
-            //clone.id = "id" + p.productId;
             clone.querySelector("tr").id = "id" + p.id;
             console.log(p.img)
             console.log(p)
             clone.querySelector(".imageColumn img").src = `../images/Ice/${p.img}.jpg`;
             clone.querySelector(".descriptionColumn h3").innerText = p.name;
             console.log(p.quantity)
-            //clone.querySelector(".descriptionColumn p").innerText = p.quantity ;
             clone.querySelector(".price").innerText = p.price * p.quantity;
             let itemNumber = clone.querySelector('.amountColumn h3')
             itemNumber.textContent = p.quantity
@@ -82,17 +80,10 @@ const removeItem = (id) => {
     localStorage.setItem("cart", JSON.stringify(updatedCart));
     const element = document.querySelector("tbody").querySelector(`#id${id}`);
     document.querySelector("#itemCount").innerText = updatedCart.length;
-    //    cart.reduce((accumulator, prod) => {
-    //    return accumulator + prod.count;
-    //}, 0)
     var currentSum = 0;
     updatedCart.map((p) => { currentSum += p.price})
-        //(p => );
 
     document.querySelector("#totalAmount").innerText = currentSum;
-    //    cart.reduce((accumulator, prod) => {
-    //    return accumulator + prod.price * prod.count;
-    //}, 0)
     console.log("e"+element);
     document.querySelector("tbody").removeChild(element);
 
@@ -136,6 +127,5 @@ const placeOrder = async () => {
         alert(`הזמנתך בוצעה בהצלחה, הזמנה מס:${r.id}`);
         window.location.href = '/pages/home.html';
     } 
-    //localStorage.setItem("cart", null);
-    //    alert(`הזמנתך בוצעה בהצלחה, הזמנה מס:`);
+
 }

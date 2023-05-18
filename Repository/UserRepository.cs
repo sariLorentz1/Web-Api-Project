@@ -4,7 +4,6 @@ using System.Text.Json;
 
 namespace Repository
 {
-    //Data Source=SRV2\PUPILS;Initial Catalog=213259948;Integrated Security=True
     public class UserRepository : IUserRepository
     {
         string filePath = "./usersDetails.txt";

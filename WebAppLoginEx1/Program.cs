@@ -1,17 +1,12 @@
 using entities;
 using Microsoft.EntityFrameworkCore;
-//using Microsoft.EntityFrameworkCore;
 using Repository;
 using Service;
 using WebAppLoginEx1;
 using NLog.Web;
-//using Business;
-
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Host.UseNLog();
-
-// Add services to the container.
 
 builder.Services.AddControllers();
 
@@ -50,7 +45,6 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-// Configure the HTTP request pipeline.
 app.UseMiddleware();
 app.UseMiddlewareErrors();
 

@@ -17,12 +17,6 @@ namespace Repository
         }
         public async Task<Order> addNewOrder(Order order)
         {
-
-            //int sum=0;
-            // order.OrderItems.ForEach(p =>  sum += (p.quantity * p.productId.price));
-
-
-
             await dbContext.Orders.AddAsync(order);
             await dbContext.SaveChangesAsync();
             return order;

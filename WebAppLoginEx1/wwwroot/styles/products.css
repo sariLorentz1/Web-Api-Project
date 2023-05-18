@@ -55,9 +55,6 @@ p.description {
 .bar::before {
     content: 'Ice Shop';
     color: white;
-    /* display: inline-block; */
-    /* margin: 0 auto; */
-    /* display: block; */
     top: 8px;
     left: 51%;
     font-family: Helvetica;

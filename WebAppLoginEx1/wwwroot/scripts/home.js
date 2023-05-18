@@ -84,7 +84,6 @@ async function getPasswordStrength(password) {
                 'Content-Type': 'application/json; charset=utf-8'
         }
     }
-    //const data = await axios.post("/api/users/password?password=" + password); 
     );
     const data = await response.json();
     console.log(data);

@@ -37,13 +37,6 @@ namespace WebAppLoginEx1.Controllers
             return BadRequest("No categories");
         }
 
-        ////GET api/<categoriesController>/5
-        //[HttpGet("{id}")]
-        //public string Get(int id)
-        //{
-        //    return "value";
-        //}
-
         // POST api/<categoriesController>
         [HttpPost]
         public async Task<ActionResult<CategoryDTO>> Post([FromBody] CategoryDTO categoryDTO)

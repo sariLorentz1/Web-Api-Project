@@ -41,7 +41,6 @@ namespace WebAppLoginEx1.Controllers
 
         // POST api/<usersController>
 
-
         [HttpPost]
         public async Task<ActionResult<UserDTO>> LoginPost([FromBody] UserDTO loginUserDTO)
         {
@@ -52,7 +51,7 @@ namespace WebAppLoginEx1.Controllers
                 _logger.LogInformation($"user {loginUserDTO.FirstName},{loginUserDTO.LastName},{loginUserDTO.Email} succeed to login");
 
                 UserDTO foundDTO = _mapper.Map<User, UserDTO>(found);
-                //_logger.LogInformation($"Login - userName: {foundDTO.Email} at {DateTime.UtcNow.ToLongTimeString()}");
+                _logger.LogInformation($"Login - userName: {foundDTO.Email} at {DateTime.UtcNow.ToLongTimeString()}");
                 return foundDTO;
             }
             return NoContent();

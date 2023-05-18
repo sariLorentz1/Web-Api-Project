@@ -18,8 +18,6 @@ const pageLoad = async () => {
 }
 
 const renderProducts = async (products) => {
-    //const product = products[0];
-    //console.log(product);
    
     products.map((product) => {
         const temp = document.getElementById("temp-card");
@@ -35,8 +33,7 @@ const renderProducts = async (products) => {
 }
 
 const renderCategories = async (categories) => {
-    //const product = products[0];
-    //console.log(product);
+
     categories.map((category) => {
         const temp = document.getElementById("temp-category");
         const clone = temp.content.cloneNode(true);
@@ -84,7 +81,6 @@ const filterProducts = async (id) => {
         products = await response.json();
         console.log(products)
         document.getElementById("PoductList").innerHTML = "";
-        //document.getElementById("categoryList").innerHTML = "";
         renderProducts(products);
     }
 } 
@@ -101,19 +97,9 @@ const getAllCategories = async () => {
 
 
 }
-    //const response = await fetch("https://localhost:44390/api/order", {
-    //    method: 'POST',
-    //    headers: {
-    //        'Content-Type': 'application/json'
-    //    }
-    //    body: {product}
-    //})    return response.ok ? await response.json() : [];
+
 
 const addToCart = (product) => {
-    //const prev = orderList.filter(p => p.id = product.id);
-    //if (prev.length > 0) {
-    //    orderList.map()
-    //}
     var x = orderList.length;
     product.quantity = product.quantity ? product.quantity :1;
     orderList.map(p => p.id == product.id ? p.quantity += 1 : x--);
